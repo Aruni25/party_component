@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- XML declaration: batata hai ki ye XML file hai aur UTF-8 encoding use ho rahi hai -->
+
 <entity-facade-xml type="seed">
+    <!-- entity-facade-xml type="seed":
+         Iska matlab hai ye file database me seed (initial) data insert karegi
+         Yaani security related records app start pe load honge -->
 
     <!-- Define an artifact group for Party REST APIs -->
     <moqui.security.ArtifactGroup
             artifactGroupId="PARTY_REST"
             description="Party REST APIs"/>
+    <!--
+        Yaha ek Artifact Group create ho raha hai jiska naam PARTY_REST hai
+        Artifact Group = related artifacts (REST, services, screens) ka logical group
+        Is group me baad me REST endpoints add honge
+    -->
 
     <!-- Add Person REST screen to the group -->
     <moqui.security.ArtifactGroupMember
@@ -12,11 +22,28 @@
             artifactName="component://party/service/party/Person.rest.xml"
             artifactTypeEnumId="AT_XML_SCREEN"
             inheritAuthz="Y"/>
-    <moqui.security.ArtifactGroup artifactGroupId="PARTY_REST"
-                                  artifactName="/party"
-                                  artifactTypeEnumId="AT_REST_PATH"
-                                  inheritAuthz="Y"
+    <!--
+        Is line me Person.rest.xml ko PARTY_REST group ka member banaya ja raha hai
+        artifactName: actual REST definition file ka path
+        artifactTypeEnumId="AT_XML_SCREEN":
+            Moqui me REST XML files screen category me aati hain
+        inheritAuthz="Y":
+            Matlab ye artifact group ke authorization rules inherit karega
+    -->
+
+    <moqui.security.ArtifactGroup
+            artifactGroupId="PARTY_REST"
+            artifactName="/party"
+            artifactTypeEnumId="AT_REST_PATH"
+            inheritAuthz="Y"
     />
+    <!--
+        Yaha REST path "/party" ko PARTY_REST group ke saath bind kiya gaya hai
+        AT_REST_PATH ka matlab:
+            Jo bhi URL /party se start hoga wo is group ke under aayega
+        inheritAuthz="Y":
+            Is path pe bhi same authz rules apply honge
+    -->
 
     <!-- Allow ALL_USERS to access it -->
     <moqui.security.ArtifactAuthz
@@ -25,5 +52,16 @@
             artifactGroupId="PARTY_REST"
             authzTypeEnumId="AUTHZT_ALWAYS"
             authzActionEnumId="AUTHZA_ALL"/>
+    <!--
+        Ye actual permission grant kar raha hai
+        userGroupId="ALL_USERS":
+            Matlab koi bhi logged-in user access kar sakta hai
+        artifactGroupId="PARTY_REST":
+            Ye permission poore PARTY_REST group pe apply hogi
+        authzTypeEnumId="AUTHZT_ALWAYS":
+            Authorization hamesha allow rahega
+        authzActionEnumId="AUTHZA_ALL":
+            Create, Read, Update, Delete sab allowed
+    -->
 
 </entity-facade-xml>
