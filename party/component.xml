@@ -1,24 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- XML declaration: ye batata hai ki file UTF-8 encoded hai -->
+
 <component name="party"
            version="1.0.0"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/component-3.xsd">
+    <!--
+        Ye Moqui ka COMPONENT descriptor file hai
+        Ye file Moqui ko batati hai:
+        "party component ke andar kya-kya available hai"
 
-
+        name="party":
+            Component ka unique naam
+        version="1.0.0":
+            Component versioning (future upgrades ke kaam aata hai)
+    -->
 
     <entity location="entity"/>
+    <!--
+        Ye Moqui ko batata hai:
+        Party component ke entity definitions
+        /entity folder ke andar milengi
+        (Party, Person, ContactMech, etc.)
+    -->
 
     <data location="data"/>
+    <!--
+        Seed / demo data yahan se load hoga
+        entity-facade-data XML files
+    -->
 
     <screen location="screen"/>
+    <!--
+        UI screens yahan define hain
+        PartyScreen.xml, etc.
+    -->
 
     <service location="service"/>
+    <!--
+        Service definition files yahan milengi
+        PersonServices.xml jaise
+    -->
+
     <service-rest location="service"/>
+    <!--
+        REST API definition files bhi
+        isi service folder ke andar hain
+        (Person.rest.xml)
+    -->
 
 <!--    <screen>-->
 <!--        <root-screen location="component://party/screen/party-apps.xml"/>-->
 <!--    </screen>-->
-
-
+    <!--
+        Ye alternative screen wiring ka example tha
+        Lekin ab moqui-conf.xml use ho raha hai
+        Isliye ye section commented hai
+    -->
 
 </component>
