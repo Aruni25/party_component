@@ -1,77 +1,171 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- XML declaration: UTF-8 encoded screen XML file -->
+
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-3.xsd"
         require-authentication="anonymous-all">
+    <!--
+        Ye Moqui XML Screen file hai
+        xml-screen-3.xsd:
+            Screen structure, widgets, actions validate karta hai
+        require-authentication="anonymous-all":
+            Screen anonymous users ke liye bhi accessible hai
+            (login ki zarurat nahi)
+    -->
+
     <transition name="createParty">
+        <!--
+            Transition = UI action / submit handler
+            createParty tab trigger hota hai jab form submit hota hai
+        -->
         <service-call name="create#party.Party"/>
+        <!--
+            create#party.Party:
+            Moqui ka built-in create service
+            Party entity me new record insert karta hai
+        -->
         <default-response url="."/>
+        <!--
+            "." ka matlab:
+            Same screen pe wapas redirect
+            (page refresh with updated data)
+        -->
     </transition>
+
     <actions>
+        <!--
+            actions block screen load hone pe execute hota hai
+            Yaha data fetch karke lists me store kiya ja raha hai
+        -->
         <entity-find entity-name="party.Party" list="partyList"/>
+        <!--
+            Party entity ke saare records fetch ho rahe hain
+            partyList me store honge
+        -->
         <entity-find entity-name="party.Person" list="personList"/>
+        <!--
+            Person entity ke saare records fetch ho rahe hain
+            personList me store honge
+        -->
     </actions>
+
     <widgets>
-        <!-- CREATE PARTY DIALOG -->
+        <!-- ================= CREATE PARTY DIALOG ================= -->
+
         <container-dialog id="CreatePartyDialog" button-text="Create Party">
+            <!--
+                Modal dialog UI component
+                "Create Party" button click karne pe open hota hai
+            -->
             <form-single name="CreatePartyForm" transition="createParty">
+                <!--
+                    Single-record form
+                    Submit hone pe createParty transition call hoti hai
+                -->
                 <auto-fields-entity entity-name="party.Party" field-type="edit"/>
+                <!--
+                    Party entity ke saare editable fields
+                    Automatically generate ho jaate hain
+                -->
                 <field name="submitButton">
                     <default-field title="Create Party">
                         <submit/>
+                        <!--
+                            Form submit button
+                        -->
                     </default-field>
                 </field>
             </form-single>
         </container-dialog>
+
+        <!-- ================= PARTY LIST ================= -->
+
         <container-box>
+            <!--
+                Container box = UI section
+                Yaha Party records display honge
+            -->
             <box-header title="All Party Records"/>
-<!--            <box-toolbar>-->
-<!--                <link url="createParty" text="Create Party" link-type="hidden-form"/>-->
-<!--            </box-toolbar>-->
+
+            <!--
+                Neeche wala toolbar commented hai
+                Warna waha se bhi Create Party link aa sakta tha
+            -->
+
             <box-body>
                 <form-list name="AllPartyRecords" list="partyList" skip-form="true">
+                    <!--
+                        form-list:
+                        partyList ke records ko table format me show karta hai
+                        skip-form="true":
+                            Ye sirf display hai, edit form nahi
+                    -->
                     <field name="partyId">
                         <header-field title="Party ID" show-order-by="true"/>
+                        <!--
+                            Column header
+                            show-order-by:
+                                Sorting enable karta hai
+                        -->
                         <default-field>
                             <display/>
                         </default-field>
                     </field>
+
                     <field name="partyTypeEnumId">
                         <header-field title="Party Type"/>
                         <default-field>
                             <display/>
                         </default-field>
                     </field>
+
                     <field name="lastUpdatedStamp">
                         <header-field title="Created / Updated"/>
                         <default-field>
                             <display format="yyyy-MM-dd HH:mm"/>
+                            <!--
+                                Date-time formatted display
+                            -->
                         </default-field>
                     </field>
                 </form-list>
             </box-body>
         </container-box>
+
+        <!-- ================= PERSON LIST ================= -->
+
         <container-box>
             <box-header title="All Person Records"/>
+            <!--
+                Separate UI section for Person data
+            -->
             <box-body>
                 <form-list name="AllPersonRecords" list="personList" skip-form="true">
+                    <!--
+                        personList ke records table format me show ho rahe hain
+                    -->
                     <field name="partyId">
                         <header-field title="Party ID"/>
                         <default-field><display/></default-field>
                     </field>
+
                     <field name="firstName">
                         <header-field title="First Name"/>
                         <default-field><display/></default-field>
                     </field>
+
                     <field name="lastName">
                         <header-field title="Last Name"/>
                         <default-field><display/></default-field>
                     </field>
-<!--                    <field name="birthDate">-->
-<!--                        <header-field title="Date of Birth"/>-->
-<!--                        <default-field><display/></default-field>-->
-<!--                    </field>-->
+
+                    <!--
+                        birthDate field commented hai
+                        Agar future me chahiye ho toh easily enable ho sakta hai
+                    -->
                 </form-list>
             </box-body>
         </container-box>
+
     </widgets>
 </screen>
