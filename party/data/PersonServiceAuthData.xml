@@ -1,30 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- XML declaration: ye batata hai ki file UTF-8 encoded XML hai -->
+
 <entity-facade-xml type="seed">
+    <!--
+        type="seed" ka matlab:
+        Ye file application startup pe security-related data
+        database me insert karegi (one-time or update based on PK)
+    -->
+
     <moqui.security.ArtifactGroup
             artifactGroupId="PERSON_SERVICES"
             description="Person Services Authorization"/>
+    <!--
+        Yaha ek Artifact Group banaya ja raha hai: PERSON_SERVICES
+        Ye group person-related services, entities aur REST paths
+        ke authorization ko logically group karega
+    -->
+
     <moqui.security.ArtifactGroupMember
             artifactGroupId="PERSON_SERVICES"
             artifactName="party.PersonServices.create#PersonCustom"
             artifactTypeEnumId="AT_SERVICE"/>
+    <!--
+        Ye service ko PERSON_SERVICES group ka member bana raha hai
+        artifactName:
+            party.PersonServices.create#PersonCustom
+            → PersonServices.xml me defined custom service
+        AT_SERVICE:
+            Matlab ye ek Moqui service artifact hai
+    -->
+
     <moqui.security.ArtifactGroupMember
             artifactGroupId="PERSON_SERVICES"
             artifactName="/party"
             artifactTypeEnumId="AT_REST_PATH"/>
+    <!--
+        Yaha REST path "/party" ko same group me add kiya gaya hai
+        Iska matlab:
+            /party se related REST calls
+            PERSON_SERVICES authorization ke under aayengi
+    -->
+
     <moqui.security.ArtifactGroupMember
             artifactGroupId="PERSON_SERVICES"
             artifactName="party.Party"
             artifactTypeEnumId="AT_ENTITY"
             authzAction="AUTHZA_ALL"/>
+    <!--
+        Party entity ko authorization group me include kiya gaya hai
+        AT_ENTITY:
+            Matlab database entity pe auth rules apply honge
+        AUTHZA_ALL:
+            Create, Read, Update, Delete sab allowed
+        Ye service ke andar Party entity pe operation ko allow karta hai
+    -->
+
     <moqui.security.ArtifactGroupMember
             artifactGroupId="PERSON_SERVICES"
             artifactName="party.Person"
             artifactTypeEnumId="AT_ENTITY"
             authzAction="AUTHZA_ALL"/>
+    <!--
+        Person entity ke liye bhi full access diya gaya hai
+        Iska reason:
+            createPerson service Party + Person dono me insert karti hai
+        Agar ye na ho:
+            Service runtime pe AUTHZ error de sakti hai
+    -->
+
     <moqui.security.ArtifactAuthz
             artifactAuthzId="PERSON_SERVICES_ALL"
             userGroupId="ALL_USERS"
             artifactGroupId="PERSON_SERVICES"
             authzTypeEnumId="AUTHZT_ALWAYS"
             authActionEnumId="AUTHZA_ALL"/>
+    <!--
+        Actual permission yaha grant hoti hai
+        userGroupId="ALL_USERS":
+            Koi bhi authenticated user access kar sakta hai
+        AUTHZT_ALWAYS:
+            Authorization hamesha allow rahegi
+        AUTHZA_ALL:
+            Har type ka action allowed hai
+    -->
+
 </entity-facade-xml>
