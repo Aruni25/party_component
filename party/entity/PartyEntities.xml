@@ -1,36 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- XML declaration: batata hai ki ye UTF-8 encoded XML file hai -->
+
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-definition-3.xsd">
+    <!--
+        Ye Moqui ki ENTITY DEFINITION file hai
+        entity-definition-3.xsd:
+        - Entity structure validate karta hai
+        - Fields, PKs, relationships check karta hai
+        Ye file DB tables ka blueprint hoti hai
+    -->
+
     <entity entity-name="Party" package="party">
+        <!--
+            Party = base / parent entity
+            Person aur PartyGroup dono isi Party ko extend karte hain
+        -->
         <field name="partyId" type="id" is-pk="true"/>
+        <!--
+            partyId = Primary Key
+            Sabse main identifier
+        -->
         <field name="partyTypeEnumId" type="id"/>
+        <!--
+            partyTypeEnumId:
+            PERSON ya PARTY_GROUP decide karta hai
+        -->
         <field name="createdDate" type="date-time"/>
+        <!--
+            Party kab create hui uska timestamp
+        -->
     </entity>
+
     <entity entity-name="Person" package="party">
+        <!--
+            Person entity = Party ka extension
+            Individual human ko represent karti hai
+        -->
         <field name="partyId" type="id" is-pk="true"/>
+        <!--
+            Same partyId jo Party me hai
+            Ye inheritance ka core rule hai
+        -->
         <field name="firstName" type="text-medium"/>
         <field name="lastName" type="text-medium"/>
+        <!--
+            Person ka naam related data
+        -->
         <field name="dateOfBirth" type="date"/>
+        <!--
+            DOB optional field (future use ke liye)
+        -->
         <relationship type="one" related="party.Party" title="Party"/>
+        <!--
+            one-to-one relationship with Party
+            Matlab:
+                Person belongs to exactly one Party
+        -->
     </entity>
+
     <entity entity-name="PartyGroup" package="party">
+        <!--
+            PartyGroup = organization / company / group
+            Ye bhi Party ka extension hai
+        -->
         <field name="partyId" type="id" is-pk="true"/>
         <field name="groupName" type="text-medium"/>
         <field name="description" type="text-medium"/>
+        <!--
+            Organization ka naam aur description
+        -->
         <relationship type="one" related="party.Party" title="Party"/>
+        <!--
+            PartyGroup ka base bhi Party hi hota hai
+        -->
     </entity>
+
     <entity entity-name="ContactMech" package="party">
+        <!--
+            ContactMech = contact mechanism
+            Email, phone, address, etc.
+        -->
         <field name="contactMechId" type="id" is-pk="true"/>
+        <!--
+            Contact mechanism ka unique ID
+        -->
         <field name="contactMechTypeEnumId" type="id"/>
+        <!--
+            EMAIL, TELECOM_NUMBER, POSTAL_ADDRESS, etc.
+        -->
         <field name="infoString" type="text-medium"/>
+        <!--
+            Actual value:
+            email address / phone number
+        -->
         <field name="createdDate" type="date-time"/>
+        <!--
+            Contact kab create hua
+        -->
     </entity>
+
     <entity entity-name="PartyContactMech" package="party">
+        <!--
+            PartyContactMech = junction / mapping entity
+            Party aur ContactMech ko connect karti hai
+        -->
         <field name="partyId" type="id" is-pk="true"/>
         <field name="contactMechId" type="id" is-pk="true"/>
         <field name="fromDate" type="date-time" is-pk="true"/>
+        <!--
+            Composite Primary Key:
+            partyId + contactMechId + fromDate
+            Ek party ke multiple contacts ho sakte hain
+        -->
         <field name="thruDate" type="date-time"/>
+        <!--
+            Contact kab tak valid hai (optional)
+        -->
         <relationship type="one" related="party.Party" title="Party"/>
         <relationship type="one" related="party.ContactMech" title="ContactMech"/>
+        <!--
+            Party ↔ ContactMech relationship define karta hai
+        -->
     </entity>
+
 </entities>
