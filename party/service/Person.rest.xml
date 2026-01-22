@@ -1,11 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+    XML declaration
+    Batata hai ki ye UTF-8 encoded XML file hai
+-->
+
 <resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/rest-api-3.xsd"
-      name="p" require-authentication="anonymous-all">
+      name="p"
+      require-authentication="anonymous-all">
+    <!--
+        Ye REST API ka ROOT resource hai
+
+        rest-api-3.xsd:
+        → REST XML ka structure validate karta hai
+
+        name="p":
+        → REST URL me /p add ho jaata hai
+
+        require-authentication="anonymous-all":
+        → Anonymous + logged-in dono users access kar sakte hain
+
+        Base URL banega:
+        /rest/s1/p
+    -->
 
     <resource name="createPerson" require-authentication="anonymous-all">
+        <!--
+            Ye child REST resource hai
+
+            name="createPerson":
+            → URL ka next part
+
+            Final REST endpoint:
+            /rest/s1/p/createPerson
+
+            require-authentication="anonymous-all":
+            → Is endpoint ko bhi anonymous access allowed hai
+        -->
+
         <method type="post">
-                <service name="party.PersonServices.create#PersonCustom"/>
+            <!--
+                HTTP method = POST
+
+                Matlab:
+                - Client data bhej raha hai
+                - JSON / form-data ke through
+            -->
+
+            <service name="party.PersonServices.create#PersonCustom"/>
+            <!--
+                Ye REST endpoint ko directly SERVICE se map karta hai
+
+                Service ka full name:
+                create#party.PersonCustom
+
+                Flow:
+                POST request aaye →
+                ye service execute ho →
+                createPerson.groovy chale
+            -->
         </method>
 
     </resource>
