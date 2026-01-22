@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-facade-xml type="seed">
+    <moqui.security.ArtifactGroup
+            artifactGroupId="PERSON_SERVICES"
+            description="Person Services Authorization"/>
+    <moqui.security.ArtifactGroupMember
+            artifactGroupId="PERSON_SERVICES"
+            artifactName="party.PersonServices.create#PersonCustom"
+            artifactTypeEnumId="AT_SERVICE"/>
+    <moqui.security.ArtifactGroupMember
+            artifactGroupId="PERSON_SERVICES"
+            artifactName="/party"
+            artifactTypeEnumId="AT_REST_PATH"/>
+    <moqui.security.ArtifactGroupMember
+            artifactGroupId="PERSON_SERVICES"
+            artifactName="party.Party"
+            artifactTypeEnumId="AT_ENTITY"
+            authzAction="AUTHZA_ALL"/>
+    <moqui.security.ArtifactGroupMember
+            artifactGroupId="PERSON_SERVICES"
+            artifactName="party.Person"
+            artifactTypeEnumId="AT_ENTITY"
+            authzAction="AUTHZA_ALL"/>
+    <moqui.security.ArtifactAuthz
+            artifactAuthzId="PERSON_SERVICES_ALL"
+            userGroupId="ALL_USERS"
+            artifactGroupId="PERSON_SERVICES"
+            authzTypeEnumId="AUTHZT_ALWAYS"
+            authActionEnumId="AUTHZA_ALL"/>
+</entity-facade-xml>

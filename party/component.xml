@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="party"
+           version="1.0.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/component-3.xsd">
+
+
+
+    <entity location="entity"/>
+
+    <data location="data"/>
+
+    <screen location="screen"/>
+
+    <service location="service"/>
+    <service-rest location="service"/>
+
+<!--    <screen>-->
+<!--        <root-screen location="component://party/screen/party-apps.xml"/>-->
+<!--    </screen>-->
+
+
+
+</component>

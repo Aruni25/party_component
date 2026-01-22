@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-facade-xml type="seed">
+
+    <!-- Define an artifact group for Party REST APIs -->
+    <moqui.security.ArtifactGroup
+            artifactGroupId="PARTY_REST"
+            description="Party REST APIs"/>
+
+    <!-- Add Person REST screen to the group -->
+    <moqui.security.ArtifactGroupMember
+            artifactGroupId="PARTY_REST"
+            artifactName="component://party/service/party/Person.rest.xml"
+            artifactTypeEnumId="AT_XML_SCREEN"
+            inheritAuthz="Y"/>
+    <moqui.security.ArtifactGroup artifactGroupId="PARTY_REST"
+                                  artifactName="/party"
+                                  artifactTypeEnumId="AT_REST_PATH"
+                                  inheritAuthz="Y"
+    />
+
+    <!-- Allow ALL_USERS to access it -->
+    <moqui.security.ArtifactAuthz
+            artifactAuthzId="PARTY_REST_ALL"
+            userGroupId="ALL_USERS"
+            artifactGroupId="PARTY_REST"
+            authzTypeEnumId="AUTHZT_ALWAYS"
+            authzActionEnumId="AUTHZA_ALL"/>
+
+</entity-facade-xml>

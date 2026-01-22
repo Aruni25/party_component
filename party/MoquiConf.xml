@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<moqui-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/moqui-conf-3.xsd">
+
+    <screen-facade>
+
+        <!-- ================= REST APIs ================= -->
+        <screen location="component://webroot/screen/webroot/rest.xml">
+            <subscreens-item
+                    name="person"
+                    location="component://party/service/party/Person.rest.xml"/>
+        </screen>
+
+        <!-- ================= PARTY UI ================= -->
+        <screen location="component://webroot/screen/webroot/apps.xml">
+            <subscreens-item
+                    name="party"
+                    menu-title="Party"
+                    menu-index="30"
+                    location="component://party/screen/PartyScreen.xml"/>
+        </screen>
+
+    </screen-facade>
+
+</moqui-conf>

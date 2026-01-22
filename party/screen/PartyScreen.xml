@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-3.xsd"
+        require-authentication="anonymous-all">
+    <transition name="createParty">
+        <service-call name="create#party.Party"/>
+        <default-response url="."/>
+    </transition>
+    <actions>
+        <entity-find entity-name="party.Party" list="partyList"/>
+        <entity-find entity-name="party.Person" list="personList"/>
+    </actions>
+    <widgets>
+        <!-- CREATE PARTY DIALOG -->
+        <container-dialog id="CreatePartyDialog" button-text="Create Party">
+            <form-single name="CreatePartyForm" transition="createParty">
+                <auto-fields-entity entity-name="party.Party" field-type="edit"/>
+                <field name="submitButton">
+                    <default-field title="Create Party">
+                        <submit/>
+                    </default-field>
+                </field>
+            </form-single>
+        </container-dialog>
+        <container-box>
+            <box-header title="All Party Records"/>
+<!--            <box-toolbar>-->
+<!--                <link url="createParty" text="Create Party" link-type="hidden-form"/>-->
+<!--            </box-toolbar>-->
+            <box-body>
+                <form-list name="AllPartyRecords" list="partyList" skip-form="true">
+                    <field name="partyId">
+                        <header-field title="Party ID" show-order-by="true"/>
+                        <default-field>
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="partyTypeEnumId">
+                        <header-field title="Party Type"/>
+                        <default-field>
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="lastUpdatedStamp">
+                        <header-field title="Created / Updated"/>
+                        <default-field>
+                            <display format="yyyy-MM-dd HH:mm"/>
+                        </default-field>
+                    </field>
+                </form-list>
+            </box-body>
+        </container-box>
+        <container-box>
+            <box-header title="All Person Records"/>
+            <box-body>
+                <form-list name="AllPersonRecords" list="personList" skip-form="true">
+                    <field name="partyId">
+                        <header-field title="Party ID"/>
+                        <default-field><display/></default-field>
+                    </field>
+                    <field name="firstName">
+                        <header-field title="First Name"/>
+                        <default-field><display/></default-field>
+                    </field>
+                    <field name="lastName">
+                        <header-field title="Last Name"/>
+                        <default-field><display/></default-field>
+                    </field>
+<!--                    <field name="birthDate">-->
+<!--                        <header-field title="Date of Birth"/>-->
+<!--                        <default-field><display/></default-field>-->
+<!--                    </field>-->
+                </form-list>
+            </box-body>
+        </container-box>
+    </widgets>
+</screen>

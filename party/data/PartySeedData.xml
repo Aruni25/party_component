@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-facade-data-3.xsd">
+    <Party partyId="P100"
+           partyTypeEnumId="PERSON"
+           createdDate="2025-01-01T00:00:00"/>
+    <Person partyId="P100"
+            firstName="Aruni"
+            lastName="Sharma"/>
+    <Party partyId="G100"
+           partyTypeEnumId="PARTY_GROUP"
+           createdDate="2025-01-01T00:00:00"/>
+    <PartyGroup partyId="G100"
+                groupName="Moqui Training Org"
+                description="Training Organization"/>
+    <ContactMech contactMechId="CM1"
+                 contactMechTypeEnumId="EMAIL"
+                 infoString="aruni@example.com"
+                 createdDate="2025-01-01T00:00:00"/>
+    <ContactMech contactMechId="CM2"
+                 contactMechTypeEnumId="TELECOM_NUMBER"
+                 infoString="9876543210"
+                 createdDate="2025-01-01T00:00:00"/>
+    <PartyContactMech partyId="P100"
+                      contactMechId="CM1"
+                      fromDate="2025-01-01T00:00:00"/>
+    <PartyContactMech partyId="P100"
+                      contactMechId="CM2"
+                      fromDate="2025-01-01T00:00:00"/>
+</data>
