@@ -1,22 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- XML declaration: ye batata hai ki file UTF-8 encoded hai -->
+
 <services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/service-definition-3.xsd">
+    <!--
+        Ye Moqui ki SERVICE DEFINITION file hai
+        service-definition-3.xsd:
+        - Service syntax validate karta hai
+        - Parameters, types, script location check karta hai
+    -->
 
     <service verb="create" noun="PersonCustom" type="script"
              location="component://party/service/party/createPerson.groovy">
+        <!--
+            Service ka full name banega:
+            create#party.PersonCustom
+
+            verb="create" → create operation
+            noun="PersonCustom" → custom person service
+            type="script" → Groovy script execute hogi
+            location → actual Groovy file ka path
+        -->
 
         <in-parameters>
+            <!--
+                In-parameters = inputs jo service ko milenge
+            -->
+
             <parameter name="partyId" type="String" required="true"/>
+            <!--
+                partyId mandatory hai
+                Ye Party aur Person ko link karega
+            -->
+
             <parameter name="firstName" type="String" required="true"/>
             <parameter name="lastName" type="String" required="true"/>
+            <!--
+                firstName aur lastName required fields hain
+            -->
+
 <!--            <parameter name="dateOfBirth" type="Date"/>-->
+            <!--
+                dateOfBirth future use ke liye commented hai
+                Abhi service ise expect nahi karti
+            -->
 
             <!-- Allow additional optional params -->
             <auto-parameters entity-name="party.Person" include="nonpk"/>
+            <!--
+                party.Person entity ke saare NON-PK fields
+                automatically optional parameters ban jaate hain
+
+                include="nonpk" ka matlab:
+                partyId (PK) exclude hoga
+            -->
         </in-parameters>
 
         <out-parameters>
+            <!--
+                Service execution ke baad jo values return hongi
+            -->
             <parameter name="responseMessage" type="String" required="true"/>
+            <!--
+                responseMessage = success / failure message
+                Caller (REST / screen) ko milega
+            -->
         </out-parameters>
 
     </service>
