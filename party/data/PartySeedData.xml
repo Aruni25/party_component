@@ -1,29 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-facade-data-3.xsd">
+<!-- XML declaration: batata hai ki ye UTF-8 encoded XML file hai -->
+
+<data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-facade-data-3.xsd">
+    <!--
+        Ye Moqui ka entity seed data file hai
+        entity-facade-data-3.xsd ensure karta hai:
+        - Entity names valid ho
+        - Fields correct ho
+        - Relationships properly match ho
+    -->
+
     <Party partyId="P100"
            partyTypeEnumId="PERSON"
            createdDate="2025-01-01T00:00:00"/>
+    <!--
+        Party table me ek record create ho raha hai
+        partyId="P100" → unique identifier
+        partyTypeEnumId="PERSON" → ye party ek individual person hai
+        Person entity isi Party record ko extend karegi
+    -->
+
     <Person partyId="P100"
             firstName="Aruni"
             lastName="Sharma"/>
+    <!--
+        Person entity ka record create ho raha hai
+        partyId same hai (P100) → Party–Person inheritance
+        Matlab:
+            Party = base entity
+            Person = detail entity
+    -->
+
     <Party partyId="G100"
            partyTypeEnumId="PARTY_GROUP"
            createdDate="2025-01-01T00:00:00"/>
+    <!--
+        Ek aur Party record create ho raha hai
+        partyTypeEnumId="PARTY_GROUP" → organization / group type party
+    -->
+
     <PartyGroup partyId="G100"
                 groupName="Moqui Training Org"
                 description="Training Organization"/>
+    <!--
+        PartyGroup entity ka record
+        Ye Party (G100) ka extension hai
+        Organization ka naam aur description define karta hai
+    -->
+
     <ContactMech contactMechId="CM1"
                  contactMechTypeEnumId="EMAIL"
                  infoString="aruni@example.com"
                  createdDate="2025-01-01T00:00:00"/>
+    <!--
+        ContactMech = contact mechanism
+        CM1 ek EMAIL type contact hai
+        infoString me actual email address stored hai
+    -->
+
     <ContactMech contactMechId="CM2"
                  contactMechTypeEnumId="TELECOM_NUMBER"
                  infoString="9876543210"
                  createdDate="2025-01-01T00:00:00"/>
+    <!--
+        CM2 ek phone number contact mechanism hai
+        TELECOM_NUMBER → mobile / landline dono ke liye use hota hai
+    -->
+
     <PartyContactMech partyId="P100"
                       contactMechId="CM1"
                       fromDate="2025-01-01T00:00:00"/>
+    <!--
+        PartyContactMech = junction (mapping) entity
+        Ye batata hai ki:
+            Party P100 ke paas email CM1 hai
+        fromDate → contact kab se valid hai
+    -->
+
     <PartyContactMech partyId="P100"
                       contactMechId="CM2"
                       fromDate="2025-01-01T00:00:00"/>
+    <!--
+        Isi person (P100) ke saath phone number CM2 bhi mapped hai
+        Ek party ke multiple contact mechanisms ho sakte hain
+    -->
+
 </data>
